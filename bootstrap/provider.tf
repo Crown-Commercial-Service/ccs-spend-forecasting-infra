@@ -7,14 +7,9 @@ terraform {
   }
 }
 
-# terraform {
-#   backend "azurerm" {
-#     resource_group_name  = "rg-ccs-tfstate"
-#     storage_account_name = "ccstfstate"
-#     container_name       = "tfstate"
-#     key                  = "${var.stack_identifier}-terraform.tfstate"
-#   }
-# }
+terraform {
+  backend "azurerm" {}
+}
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {

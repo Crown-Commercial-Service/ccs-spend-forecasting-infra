@@ -3,9 +3,10 @@ data "azurerm_resource_group" "rg" {
 }
 
 module "state_blob" {
-  source           = "../modules/secure_storage"
-  container_name   = "forecasting${var.stack_identifier}tfstate"
-  rg_name          = data.azurerm_resource_group.rg.name
-  rg_location      = data.azurerm_resource_group.rg.location
-  stack_identifier = var.stack_identifier
+  source               = "../modules/secure_storage"
+  storage_account_name = "forecastingtfstate"
+  container_name       = "tfstate"
+  rg_name              = data.azurerm_resource_group.rg.name
+  rg_location          = data.azurerm_resource_group.rg.location
+  stack_identifier     = "Global"
 }

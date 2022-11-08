@@ -12,7 +12,7 @@ terraform {
 #     resource_group_name  = "rg-ccs-tfstate"
 #     storage_account_name = "ccstfstate"
 #     container_name       = "tfstate"
-#     key                  = "terraform.tfstate"
+#     key                  = "${var.stack_identifier}-terraform.tfstate"
 #   }
 # }
 

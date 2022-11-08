@@ -9,3 +9,7 @@ variable "rg_name" {
 variable "rg_location" {
   description = "Resource group location"
 }
+
+variable "stack_identifier" {
+  description = "Stack identifier for this resource"
+}

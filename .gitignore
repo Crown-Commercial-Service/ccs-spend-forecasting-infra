@@ -1,0 +1,24 @@
+# Local .terraform directories
+.terraform*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# tfplan files
+*.tfplan
+
+# local tfvars
+*.tfvars
+
+# local env variables
+.env
+
+# IDE files
+.DS_Store
+
+# VS code config
+.vscode/
+
+# terraform bash script
+terraform.sh

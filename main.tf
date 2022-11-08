@@ -20,3 +20,15 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+
+resource "azurerm_resource_group" "rg" {
+  name     = "ccs-rg"
+  location = "uksouth"
+}
+
+resource "azurerm_data_factory" "import_factory" {
+  name                = "ccs-import-factory"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}

@@ -1,0 +1,16 @@
+name: "Terraform formatting"
+
+on:
+  pull_request
+
+jobs:
+  check-format:
+    name: "Check Terraform formatting"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: "Git clone the repository"
+        uses: actions/checkout@v3
+      - name: "Check format"
+        run: terraform fmt -recursive -check

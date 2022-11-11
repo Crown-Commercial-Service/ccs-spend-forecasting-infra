@@ -69,3 +69,18 @@ terraform -chdir=${stack_name} plan \
 ;;
 ```
 
+### Azure Data Factory Github integration
+
+The Data Factory templates are integrated with [the relevant git repository](https://github.com/Crown-Commercial-Service/ccs-spend-forecasting-adf). Due to inconsistencies with how Azure has applied permissions between the GUI and the CLI (see [here](https://github.com/hashicorp/terraform/issues/24449)), it is not possible to terraform the `github_integration` block of the Data Factory without higher level permissions than Resource Group. 
+
+Therefore, upon first creation of the Data Factory (for example, if the whole envionment needed to be removed and recreated), it is necessary to associate the Data Factory with the git repo with the following parameters:
+
+Repository name - `ccs-spend-forecasting-adf`
+
+Collaboration branch - `main`
+
+Publish branch - `adf_publish`
+
+Root folder - `/`
+
+Assuming that the Data Factory is newly created and therefore has no resources, you do not need to tick 'import existing resources to repository'. 

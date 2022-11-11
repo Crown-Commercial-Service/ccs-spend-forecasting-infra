@@ -19,6 +19,3 @@
 
 # VS code config
 .vscode/
-
-# terraform bash script
-terraform.sh

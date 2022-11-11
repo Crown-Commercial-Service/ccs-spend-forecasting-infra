@@ -5,6 +5,14 @@ resource "azurerm_data_factory" "import_factory" {
   identity {
     type = "SystemAssigned"
   }
+
+  lifecycle {
+    ignore_changes = [
+      # permission inconsistancy between CLI and GUI means that we need to ignore this block
+      # see https://github.com/integrations/terraform-provider-github/issues/392
+      github_configuration
+    ]
+  }
 }
 
 resource "azurerm_data_factory_linked_service_azure_sql_database" "example" {

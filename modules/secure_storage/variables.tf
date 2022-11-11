@@ -1,6 +1,6 @@
 variable "container_names" {
   description = "Names of containers"
-  type        = map(string)
+  type        = list(string)
 }
 
 variable "storage_account_name" {

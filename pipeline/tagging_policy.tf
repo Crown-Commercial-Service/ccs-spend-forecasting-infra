@@ -20,7 +20,15 @@ resource "azurerm_resource_group_policy_assignment" "inheritTagFromRG" {
 }
 
 resource "azurerm_role_assignment" "assignment" {
+  count                = length(var.mandatory_tag_keys)
   scope                = local.resource_group_id
   role_definition_name = "Contributor"
-  principal_id         = azurerm_resource_group_policy_assignment.inheritTagFromRG[2].identity[0].principal_id
+  principal_id         = azurerm_resource_group_policy_assignment.inheritTagFromRG[count.index].identity[0].principal_id
+}
+
+resource "azurerm_resource_group_policy_remediation" "inheritTagFromRG" {
+  count                = length(var.mandatory_tag_keys)
+  name                 = "inherit-tag-from-rg-remediation-${lower(var.mandatory_tag_keys[count.index])}"
+  resource_group_id    = local.resource_group_id
+  policy_assignment_id = azurerm_resource_group_policy_assignment.inheritTagFromRG[count.index].id
 }

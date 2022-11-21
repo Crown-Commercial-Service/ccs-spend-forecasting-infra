@@ -8,8 +8,12 @@ variable "mandatory_tag_keys" {
   type        = list(any)
   description = "List of mandatory tag keys used by policy 'inheritTagFromRG'"
   default = [
-    "ApplicationName",
+    "MaintenanceWindow",
     "Department",
-    "Cost Centre"
+    "ApplicationName",
+    "Cost Centre",
+    "TechnicalContact",
+    "Owner",
+    "Data Classification",
   ]
 }

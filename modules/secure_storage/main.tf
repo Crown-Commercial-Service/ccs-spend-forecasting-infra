@@ -12,14 +12,14 @@ resource "azurerm_storage_account" "account" {
   }
 
   tags = {
-    Region             = var.rg_location
-    Environment        = var.stack_identifier
-    MaintenanceWindow  = "Any"
-    Department         = "TBC"
-    ApplicationName    = "Forecasting"
-    TechnicalContact   = "TBC"
-    Owner              = "TBC"
-    DataClassification = "TBC"
+    Region      = var.rg_location
+    Environment = var.stack_identifier
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
   }
 }
 

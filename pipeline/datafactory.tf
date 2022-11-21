@@ -10,7 +10,8 @@ resource "azurerm_data_factory" "import_factory" {
     ignore_changes = [
       # permission inconsistancy between CLI and GUI means that we need to ignore this block
       # see https://github.com/integrations/terraform-provider-github/issues/392
-      github_configuration
+      github_configuration,
+      tags
     ]
   }
 }

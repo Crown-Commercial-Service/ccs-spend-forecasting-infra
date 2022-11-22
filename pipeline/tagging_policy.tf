@@ -1,9 +1,13 @@
+data "azurerm_policy_definition" "inherit_tag" {
+  display_name = "Inherit a tag from the resource group"
+}
+
 resource "azurerm_resource_group_policy_assignment" "inheritTagFromRG" {
   count                = length(var.mandatory_tag_keys)
   name                 = "inheritTagFromRG_${var.mandatory_tag_keys[count.index]}"
   display_name         = "Inherit tag ${var.mandatory_tag_keys[count.index]} from the resource group"
   resource_group_id    = local.resource_group_id
-  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/cd3aa116-8754-49c9-a813-ad46512ece54"
+  policy_definition_id = data.azurerm_policy_definition.inherit_tag.id
   location             = data.terraform_remote_state.bootstrap.outputs.resource_group_location
 
   identity {

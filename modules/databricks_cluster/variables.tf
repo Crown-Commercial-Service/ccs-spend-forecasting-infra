@@ -8,7 +8,7 @@ variable "secret_scope_name" {
   type        = string
 }
 
-variable "libraries" {
+variable "python_libraries" {
   description = "List of libraries to install on the cluster"
   type        = list(string)
 }

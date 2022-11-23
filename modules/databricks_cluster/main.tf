@@ -26,7 +26,7 @@ resource "databricks_cluster" "cluster" {
   # Libraries for the spark cluster need to be in one block per package
   # See https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster#library-configuration-block
   dynamic "library" {
-    for_each = var.libraries
+    for_each = var.python_libraries
     content {
       pypi {
         package = library.value

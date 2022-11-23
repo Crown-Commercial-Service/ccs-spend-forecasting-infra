@@ -15,7 +15,7 @@ module "databricks_cluster" {
   source            = "../modules/databricks_cluster"
   cluster_name      = "${local.resource_group_name}-${var.stack_identifier}-cluster"
   secret_scope_name = "${local.resource_group_name}-${var.stack_identifier}-scope"
-  libraries = [
+  python_libraries = [
     "python-dotenv",
     "azure-identity",
     "azure-storage-blob"

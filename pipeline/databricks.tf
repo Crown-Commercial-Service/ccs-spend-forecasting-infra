@@ -51,3 +51,17 @@ resource "databricks_secret" "application_password" {
   string_value = data.terraform_remote_state.auth.outputs.application_password
   scope        = databricks_secret_scope.secret.id
 }
+
+
+resource "databricks_secret" "client_id" {
+  key          = "client_id"
+  string_value = data.terraform_remote_state.auth.outputs.client_id
+  scope        = databricks_secret_scope.secret.id
+}
+
+resource "databricks_secret" "tenant_id" {
+  key          = "tenant_id"
+  string_value = data.azurerm_client_config.current.tenant_id
+  scope        = databricks_secret_scope.secret.id
+}
+

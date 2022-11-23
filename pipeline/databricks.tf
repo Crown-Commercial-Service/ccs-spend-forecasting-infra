@@ -11,57 +11,19 @@ resource "azurerm_databricks_workspace" "databricks" {
   }
 }
 
-data "databricks_node_type" "smallest" {
-  local_disk = true
-  category   = "General Purpose"
-}
-
-output "selected_node_type" {
-  value = data.databricks_node_type.smallest.id
-}
-
-data "databricks_spark_version" "latest_lts" {
-  long_term_support = true
-}
-
-resource "databricks_cluster" "shared_autoscaling" {
-  cluster_name            = "${local.resource_group_name}-${var.stack_identifier}-cluster"
-  spark_version           = data.databricks_spark_version.latest_lts.id
-  node_type_id            = data.databricks_node_type.smallest.id
-  autotermination_minutes = 20
-  num_workers             = 0
-  spark_conf = {
-    # Single-node
-    "spark.databricks.cluster.profile" : "singleNode"
-    "spark.master" : "local[*]"
+module "databricks_cluster" {
+  source            = "../modules/databricks_cluster"
+  cluster_name      = "${local.resource_group_name}-${var.stack_identifier}-cluster"
+  secret_scope_name = "${local.resource_group_name}-${var.stack_identifier}-scope"
+  libraries = [
+    "python-dotenv",
+    "azure-identity",
+    "azure-storage-blob"
+  ]
+  secrets = {
+    application_password = data.terraform_remote_state.auth.outputs.application_password
+    client_id            = data.terraform_remote_state.auth.outputs.client_id
+    tenant_id            = data.azurerm_client_config.current.tenant_id
   }
-
-  custom_tags = {
-    "ResourceClass" = "SingleNode"
-  }
-}
-
-resource "databricks_secret_scope" "secret" {
-  name                     = "${local.resource_group_name}-${var.stack_identifier}-scope"
-  initial_manage_principal = "users"
-}
-
-resource "databricks_secret" "application_password" {
-  key          = "application_password"
-  string_value = data.terraform_remote_state.auth.outputs.application_password
-  scope        = databricks_secret_scope.secret.id
-}
-
-
-resource "databricks_secret" "client_id" {
-  key          = "client_id"
-  string_value = data.terraform_remote_state.auth.outputs.client_id
-  scope        = databricks_secret_scope.secret.id
-}
-
-resource "databricks_secret" "tenant_id" {
-  key          = "tenant_id"
-  string_value = data.azurerm_client_config.current.tenant_id
-  scope        = databricks_secret_scope.secret.id
 }
 

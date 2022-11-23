@@ -16,6 +16,7 @@ data "terraform_remote_state" "auth" {
     key                  = "auth-${var.stack_identifier}-terraform.tfstate"
     resource_group_name  = var.resource_group_name
   }
+}
 
 data "azurerm_resource_group" "current" {
   name = var.resource_group_name

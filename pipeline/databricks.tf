@@ -3,6 +3,12 @@ resource "azurerm_databricks_workspace" "databricks" {
   resource_group_name = local.resource_group_name
   location            = data.terraform_remote_state.bootstrap.outputs.resource_group_location
   sku                 = "standard"
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 data "databricks_node_type" "smallest" {

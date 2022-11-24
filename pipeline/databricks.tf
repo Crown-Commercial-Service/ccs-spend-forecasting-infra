@@ -12,18 +12,25 @@ resource "azurerm_databricks_workspace" "databricks" {
 }
 
 module "databricks_cluster" {
-  source            = "../modules/databricks_cluster"
-  cluster_name      = "${local.resource_group_name}-${var.stack_identifier}-cluster"
-  secret_scope_name = "${local.resource_group_name}-${var.stack_identifier}-scope"
+  source = "../modules/databricks_cluster"
+  # Secrets to Authenticate with databricks via service principal
+  azure_client_id             = local.azure_client_id
+  azure_client_secret         = local.azure_client_secret
+  azure_tenant_id             = local.azure_tenant_id
+  host                        = azurerm_databricks_workspace.databricks.workspace_url
+  azure_workspace_resource_id = azurerm_databricks_workspace.databricks.id
+  cluster_name                = "${local.resource_group_name}-${var.stack_identifier}-cluster"
+  secret_scope_name           = "${local.resource_group_name}-${var.stack_identifier}-scope"
   python_libraries = [
     "python-dotenv",
     "azure-identity",
     "azure-storage-blob"
   ]
+  # Secrets to be accessible within databricks cluster
   secrets = {
-    application_password = data.terraform_remote_state.auth.outputs.application_password
-    client_id            = data.terraform_remote_state.auth.outputs.client_id
-    tenant_id            = data.azurerm_client_config.current.tenant_id
+    application_password = local.azure_client_secret
+    client_id            = local.azure_client_id
+    tenant_id            = local.azure_tenant_id
   }
 }
 

@@ -24,7 +24,9 @@ module "databricks_cluster" {
   python_libraries = [
     "python-dotenv",
     "azure-identity",
-    "azure-storage-blob"
+    "azure-storage-blob",
+    "ipython",
+    "matplotlib"
   ]
   # Secrets to be accessible within databricks cluster
   secrets = {

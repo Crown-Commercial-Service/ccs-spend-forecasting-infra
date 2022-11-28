@@ -1,8 +1,8 @@
 output "application_password" {
-  value     = azuread_service_principal_password.databricks-app.value
+  value     = module.app-registrations["databricks-app"].application_password
   sensitive = true
 }
 
 output "client_id" {
-  value = azuread_application.databricks-app.application_id
+  value = module.app-registrations["databricks-app"].client_id
 }

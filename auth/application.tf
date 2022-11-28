@@ -1,13 +1,12 @@
-resource "azuread_application" "databricks-app" {
-  display_name = "${local.resource_group_name}-${var.stack_identifier}-databricks-app"
+locals {
+  app_names = {
+    databricks-app = "${local.resource_group_name}-${var.stack_identifier}-databricks-app"
+    github-app     = "${local.resource_group_name}-${var.stack_identifier}-github-app"
+  }
 }
 
-resource "azuread_service_principal" "databricks-app" {
-  application_id = azuread_application.databricks-app.application_id
+module "app-registrations" {
+  for_each     = local.app_names
+  source       = "../modules/app_registration"
+  display_name = each.value
 }
-
-resource "azuread_service_principal_password" "databricks-app" {
-  service_principal_id = azuread_service_principal.databricks-app.id
-}
-
-

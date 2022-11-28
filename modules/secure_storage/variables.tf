@@ -18,3 +18,7 @@ variable "rg_location" {
 variable "stack_identifier" {
   description = "Stack identifier for this resource"
 }
+
+variable "data_contributor_principals" {
+  description = "List of principals which can access this blob as Storage Blob Data Contributor"
+}

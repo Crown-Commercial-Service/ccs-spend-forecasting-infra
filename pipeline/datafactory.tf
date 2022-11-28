@@ -28,10 +28,3 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "blob-connecti
   service_endpoint     = "https://${local.storage_account_name}.blob.core.windows.net"
   use_managed_identity = true
 }
-
-
-resource "azurerm_role_assignment" "blob-contributor" {
-  scope                = module.storage_blob.storage_account_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_data_factory.import_factory.identity[0].principal_id
-}

@@ -11,57 +11,28 @@ resource "azurerm_databricks_workspace" "databricks" {
   }
 }
 
-data "databricks_node_type" "smallest" {
-  local_disk = true
-  category   = "General Purpose"
-}
-
-output "selected_node_type" {
-  value = data.databricks_node_type.smallest.id
-}
-
-data "databricks_spark_version" "latest_lts" {
-  long_term_support = true
-}
-
-resource "databricks_cluster" "shared_autoscaling" {
-  cluster_name            = "${local.resource_group_name}-${var.stack_identifier}-cluster"
-  spark_version           = data.databricks_spark_version.latest_lts.id
-  node_type_id            = data.databricks_node_type.smallest.id
-  autotermination_minutes = 20
-  num_workers             = 0
-  spark_conf = {
-    # Single-node
-    "spark.databricks.cluster.profile" : "singleNode"
-    "spark.master" : "local[*]"
+module "databricks_cluster" {
+  source = "../modules/databricks_cluster"
+  # Secrets to Authenticate with databricks via service principal
+  azure_client_id             = local.azure_client_id
+  azure_client_secret         = local.azure_client_secret
+  azure_tenant_id             = local.azure_tenant_id
+  host                        = azurerm_databricks_workspace.databricks.workspace_url
+  azure_workspace_resource_id = azurerm_databricks_workspace.databricks.id
+  cluster_name                = "${local.resource_group_name}-${var.stack_identifier}-cluster"
+  secret_scope_name           = "${local.resource_group_name}-${var.stack_identifier}-scope"
+  python_libraries = [
+    "python-dotenv",
+    "azure-identity",
+    "azure-storage-blob",
+    "ipython",
+    "matplotlib"
+  ]
+  # Secrets to be accessible within databricks cluster
+  secrets = {
+    application_password = local.azure_client_secret
+    client_id            = local.azure_client_id
+    tenant_id            = local.azure_tenant_id
   }
-
-  custom_tags = {
-    "ResourceClass" = "SingleNode"
-  }
-}
-
-resource "databricks_secret_scope" "secret" {
-  name                     = "${local.resource_group_name}-${var.stack_identifier}-scope"
-  initial_manage_principal = "users"
-}
-
-resource "databricks_secret" "application_password" {
-  key          = "application_password"
-  string_value = data.terraform_remote_state.auth.outputs.application_password
-  scope        = databricks_secret_scope.secret.id
-}
-
-
-resource "databricks_secret" "client_id" {
-  key          = "client_id"
-  string_value = data.terraform_remote_state.auth.outputs.client_id
-  scope        = databricks_secret_scope.secret.id
-}
-
-resource "databricks_secret" "tenant_id" {
-  key          = "tenant_id"
-  string_value = data.azurerm_client_config.current.tenant_id
-  scope        = databricks_secret_scope.secret.id
 }
 

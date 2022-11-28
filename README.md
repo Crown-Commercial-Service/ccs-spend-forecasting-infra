@@ -9,6 +9,10 @@ This repository contains a collection of Terraform modules which form the basis 
 - Terraform
 - Azure CLI
 - Access to a resource group within an Azure subscription
+- Python
+    - If Python 3 - 3.6 and above
+    - If Python 2 - 2.7.9 and above
+- `databricks-cli` ([installation instructions](https://docs.databricks.com/dev-tools/cli/index.html))
 
 ### Setup
 

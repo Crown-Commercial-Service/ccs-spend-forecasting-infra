@@ -4,5 +4,11 @@ output "application_password" {
 }
 
 output "client_id" {
-  value = azuread_application.app.application_id
+  value       = azuread_application.app.application_id
+  description = "Client, also known as application, ID"
+}
+
+output "object_id" {
+  value       = azuread_application.app.object_id
+  description = "Internal object id of the application"
 }

@@ -6,3 +6,7 @@ output "application_password" {
 output "client_id" {
   value = module.app-registrations["databricks-app"].client_id
 }
+
+output "github_client_id" {
+  value = module.app-registrations["github-app"].client_id
+}

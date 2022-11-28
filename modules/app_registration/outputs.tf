@@ -12,3 +12,7 @@ output "object_id" {
   value       = azuread_application.app.object_id
   description = "Internal object id of the application"
 }
+
+output "service_principal_id" {
+  value = azuread_service_principal.app.id
+}

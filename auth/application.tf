@@ -4,9 +4,10 @@ module "app-registrations" {
   display_name = each.value
 }
 
-resource "azuread_application_federated_identity_credential" "github" {
-  application_object_id = module.app-registrations["terraform-app"].object_id
-  display_name          = "${var.stack_identifier}-terraform-actions-oidc"
+# Connect to databricks app from app repo
+resource "azuread_application_federated_identity_credential" "databricks" {
+  application_object_id = module.app-registrations["databricks-app"].object_id
+  display_name          = "${var.stack_identifier}-databricks-actions-oidc"
   description           = "Created by Terraform (stack - ${var.stack_identifier}) to authenticate github actions via OIDC"
   audiences             = ["api://AzureADTokenExchange"]
   issuer                = "https://token.actions.githubusercontent.com"

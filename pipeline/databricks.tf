@@ -40,5 +40,10 @@ module "databricks_cluster" {
     client_id            = local.azure_client_id
     tenant_id            = local.azure_tenant_id
   }
+  # depends_on is required as the workspace needs to be created before the
+  # provider configuration block is created
+  depends_on = [
+    azurerm_databricks_workspace.databricks
+  ]
 }
 

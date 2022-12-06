@@ -1,5 +1,5 @@
-output "databricks_application_password" {
-  value     = module.app-registrations["databricks-app"].application_password
+output "databricks_service_principal_password" {
+  value     = module.app-registrations["databricks-app"].service_principal_password
   sensitive = true
 }
 

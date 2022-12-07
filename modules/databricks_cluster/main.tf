@@ -8,7 +8,7 @@ data "databricks_spark_version" "latest_lts" {
   long_term_support = true
 }
 
-resource "databricks_cluster" "cluster" {
+resource "databricks_cluster" "pipeline_cluster" {
   cluster_name            = var.cluster_name
   spark_version           = data.databricks_spark_version.latest_lts.id
   node_type_id            = data.databricks_node_type.smallest.id

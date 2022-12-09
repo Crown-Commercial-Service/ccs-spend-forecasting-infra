@@ -7,3 +7,5 @@ data "terraform_remote_state" "bootstrap" {
     resource_group_name  = var.resource_group_name
   }
 }
+
+data "azurerm_client_config" "current" {}

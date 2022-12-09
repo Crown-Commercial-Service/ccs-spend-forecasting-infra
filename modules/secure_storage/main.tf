@@ -29,3 +29,10 @@ resource "azurerm_storage_container" "container" {
   storage_account_name  = azurerm_storage_account.account.name
   container_access_type = "private"
 }
+
+resource "azurerm_role_assignment" "databricks-blob-contributor" {
+  count                = length(var.data_contributor_principals)
+  scope                = azurerm_storage_account.account.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.data_contributor_principals[count.index]
+}

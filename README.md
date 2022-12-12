@@ -6,7 +6,7 @@ This repository contains a collection of Terraform modules which form the basis 
 
 ## Requirements
 
-- Terraform
+- Terraform - 1.3.6 or above
 - Azure CLI
 - Access to a resource group within an Azure subscription
 - Python

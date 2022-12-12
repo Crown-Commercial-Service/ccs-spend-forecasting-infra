@@ -17,3 +17,7 @@ variable "mandatory_tag_keys" {
     "Data Classification",
   ]
 }
+
+variable "user_group_id" {
+  description = "Azure AD object representing a group which will have access to Azure keyvault"
+}

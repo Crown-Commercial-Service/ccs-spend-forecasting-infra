@@ -28,6 +28,8 @@ You need to create a `.tfvars` file with the name of your `STACK_IDENTIFIER`. Fo
 
 `db_connection_string` - The full connection string for the SQL database where you will be reading the data from.
 
+`user_group_id` - Azure AD object ID representing a group which will have access to Azure keyvault
+
 For example:
 
 ```

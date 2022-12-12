@@ -6,7 +6,7 @@ This repository contains a collection of Terraform modules which form the basis 
 
 ## Requirements
 
-- Terraform
+- Terraform - 1.3.6 or above
 - Azure CLI
 - Access to a resource group within an Azure subscription
 - Python
@@ -88,3 +88,16 @@ Publish branch - `adf_publish`
 Root folder - `/`
 
 Assuming that the Data Factory is newly created and therefore has no resources, you do not need to tick 'import existing resources to repository'. 
+
+
+### Databricks workspace
+
+Once the Databricks workspace has been created in the `pipeline` stack, certain actions then need to be taken using an additional authentication method. There are various ways to do this ([documentation](https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/)), including authenticating locally using the same Azure AD resource which is used for Azure CLI. However, the tokens issued expire every 24 hours and it was not possible to automate without adding more local files on each developer machine. 
+
+Therefore, in this project, the `provider.tf` configures the databricks provider to use a service principal (defined in the `auth` stack), which  meanas that the user does not have to do any additional manual steps. This could be reconfigured in the future if necessary, just be aware of the `workspace_resource_id` parameter, which is the resource ID (**not** the workspace ID). 
+
+
+
+#### Invalid resource ID
+
+If you get `Error: Invalid resource ID` when running `plan`, one of the reasons could be that, rather than an incorrect resource ID being provided as reported, the provider is incorrectly configured.  

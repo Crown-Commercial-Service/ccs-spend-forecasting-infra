@@ -1,4 +1,4 @@
-output "application_password" {
+output "service_principal_password" {
   value     = azuread_service_principal_password.app.value
   sensitive = true
 }

@@ -17,9 +17,12 @@ resource "azurerm_data_factory" "import_factory" {
 }
 
 resource "azurerm_data_factory_linked_service_azure_sql_database" "sql-connection" {
-  name              = "${var.stack_identifier}-sql-connection"
-  data_factory_id   = azurerm_data_factory.import_factory.id
-  connection_string = var.db_connection_string
+  name            = "${var.stack_identifier}-sql-connection"
+  data_factory_id = azurerm_data_factory.import_factory.id
+  key_vault_connection_string {
+    linked_service_name = azurerm_data_factory_linked_service_key_vault.key-vault-connection.name
+    secret_name         = azurerm_key_vault_secret.db-connection-string.name
+  }
 }
 
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "blob-connection" {
@@ -27,4 +30,10 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "blob-connecti
   data_factory_id      = azurerm_data_factory.import_factory.id
   service_endpoint     = "https://${local.storage_account_name}.blob.core.windows.net"
   use_managed_identity = true
+}
+
+resource "azurerm_data_factory_linked_service_key_vault" "key-vault-connection" {
+  name            = "${var.stack_identifier}-key-vault-connection"
+  data_factory_id = azurerm_data_factory.import_factory.id
+  key_vault_id    = azurerm_key_vault.vault.id
 }

@@ -30,6 +30,8 @@ You need to create a `.tfvars` file with the name of your `STACK_IDENTIFIER`. Fo
 
 `user_group_id` - Azure AD object ID representing a group which will have access to Azure keyvault
 
+`github_token` - FULL DETAILS TO BE ADDED
+
 For example:
 
 ```

@@ -12,6 +12,10 @@ terraform {
   backend "azurerm" {}
 }
 
+provider "azurerm" {
+  features {}
+}
+
 provider "github" {
   token = var.github_token
   owner = "Crown-Commercial-Service"

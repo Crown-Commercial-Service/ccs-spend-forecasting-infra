@@ -8,17 +8,25 @@ This repository contains a collection of Terraform modules which form the basis 
 
 - Terraform - 1.3.6 or above
 - Azure CLI
+- The ID of an Azure AD group which your user is part of (to set Key Vault permissions)
 - Access to a resource group within an Azure subscription
 - Python
     - If Python 3 - 3.6 and above
     - If Python 2 - 2.7.9 and above
 - `databricks-cli` ([installation instructions](https://docs.databricks.com/dev-tools/cli/index.html))
+- A Github Personal Access Token (PAT)
 
 ### Setup
 
 #### Azure
 
 Navigate to the root of the project and run `az login`. A browser will open and you will be prompted to login with your Azure credentials. 
+
+#### Github 
+
+ You need to create a 'Personal Access Token' (PAT) with `repo` permissions. Instructions on how to create one of these are [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). 
+
+ Once you have created it keep a note of it in a secure place, as you cannot access them again after you first view it. It should be treated like a password to your Github account, rotated on a regular basis, and never committed to this repository. 
 
 #### Terraform
 
@@ -30,13 +38,15 @@ You need to create a `.tfvars` file with the name of your `STACK_IDENTIFIER`. Fo
 
 `user_group_id` - Azure AD object ID representing a group which will have access to Azure keyvault
 
-`github_token` - FULL DETAILS TO BE ADDED
+`github_token` - Your github personal access token
 
 For example:
 
 ```
-resource_group_name  = "MyRGName"
-db_connection_string = "MyFullConnectionString"
+resource_group_name  = "<<MyRGName>>"
+db_connection_string = "<<MyFullConnectionString>>"
+user_group_id = "<<My-Azure-AD-Group-ID>>"
+github_token = "<<MyGithubPAT>>
 ```
 
 ### Running commands

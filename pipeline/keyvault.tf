@@ -28,7 +28,7 @@ resource "azurerm_key_vault_access_policy" "mt" {
   object_id    = var.user_group_id
 
   secret_permissions = [
-    "Get", "List", "Purge", "Set", "Recover"
+    "Get", "List", "Purge", "Set", "Recover", "Delete"
   ]
 }
 

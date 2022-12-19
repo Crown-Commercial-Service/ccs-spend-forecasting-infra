@@ -4,6 +4,8 @@ variable "resource_group_name" {}
 
 variable "db_connection_string" {}
 
+variable "github_token" {}
+
 variable "mandatory_tag_keys" {
   type        = list(any)
   description = "List of mandatory tag keys used by policy 'inheritTagFromRG'"

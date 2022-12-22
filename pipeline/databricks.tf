@@ -41,3 +41,9 @@ module "databricks_cluster" {
   ]
 }
 
+resource "azurerm_role_assignment" "adf-databricks" {
+  scope                = azurerm_databricks_workspace.databricks.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_data_factory.import_factory.identity[0].principal_id
+}
+

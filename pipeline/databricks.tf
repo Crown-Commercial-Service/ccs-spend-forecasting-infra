@@ -26,7 +26,8 @@ module "databricks_cluster" {
     "azure-identity",
     "azure-storage-blob",
     "ipython",
-    "matplotlib"
+    "matplotlib",
+    "sqlalchemy"
   ]
   # Secrets to be accessible within databricks cluster
   secrets = {

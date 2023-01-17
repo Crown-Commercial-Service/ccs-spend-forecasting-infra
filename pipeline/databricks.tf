@@ -27,7 +27,11 @@ module "databricks_cluster" {
     "azure-storage-blob",
     "ipython",
     "matplotlib",
-    "sqlalchemy"
+    "sqlalchemy",
+    # for prophet and statsmodels, 
+    # specify a minimal version to avoid a dependency conflict with the default numpy & scipy installed in databricks.
+    "prophet>=1.1.1",
+    "statsmodels>=0.13.5"
   ]
   # Secrets to be accessible within databricks cluster
   secrets = {

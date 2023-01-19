@@ -51,6 +51,12 @@ github_token = "<<MyGithubPAT>>
 
 ### Running commands
 
+#### First time setup
+
+If you are running Terraform commands for the first time in this resource group i.e. you have not got the remote state set up (as a result of tearing down all of the modules including the `bootstrap` module), then you will need to set up an Azure storage account for Terraform to store the remote state. 
+
+The `bootstrap` module contains the Terraform code to destroy the remote state if required, but to create it, follow the Microsoft instructions [here](https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli).
+
 #### Using the helper script
 
 There is a helper script, `terraform.sh`, which adds some wrappers around the basic `init`, `plan`, and `apply` scripts for Terraform. The usage of this file is `TASK STACK-NAME STACK-IDENTIFIER`, where:

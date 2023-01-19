@@ -2,7 +2,9 @@
 
 ## Purpose
 
-This repository contains a collection of Terraform modules which form the basis of the Spend Forecasting project within CCS
+This repository contains a collection of Terraform modules which form the basis of the Spend Forecasting project within CCS. 
+
+The [app repository](https://github.com/Crown-Commercial-Service/ccs-spend-forecasting-app) contains the pipeline code and logic.
 
 ## Requirements
 
@@ -116,7 +118,9 @@ Once the Databricks workspace has been created in the `pipeline` stack, certain 
 
 Therefore, in this project, the `provider.tf` configures the databricks provider to use a service principal (defined in the `auth` stack), which  meanas that the user does not have to do any additional manual steps. This could be reconfigured in the future if necessary, just be aware of the `workspace_resource_id` parameter, which is the resource ID (**not** the workspace ID). 
 
+#### Adding Python libraries
 
+If the existing Python libraries defined in this code need to be changed for the pipeline to run, you can easily amend these by editing the `databricks.tf` file in the `pipeline` module. The module takes an input list, `python_libraries`, which is a set of strings representing Python libraries. Add an extra element at the end of the list and run `plan` and `apply`. It may take several minutes to complete.
 
 #### Invalid resource ID
 

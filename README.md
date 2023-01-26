@@ -122,6 +122,12 @@ Therefore, in this project, the `provider.tf` configures the databricks provider
 
 If the existing Python libraries defined in this code need to be changed for the pipeline to run, you can easily amend these by editing the `databricks.tf` file in the `pipeline` module. The module takes an input list, `python_libraries`, which is a set of strings representing Python libraries. Add an extra element at the end of the list and run `plan` and `apply`. It may take several minutes to complete.
 
+#### Adding users
+
+If, for any reason, a user needs to access the Databricks workspace itself rather than triggering the pipeline via DataFactory, then the administrator (by default the person who created the workspace via Terraform) can add users by following [these steps](https://learn.microsoft.com/en-us/azure/databricks/administration-guide/users-groups/users). 
+
+Databricks will sync with Active Directory, so as long as the users are within AD, once they are added then they will be able to access the workspace. 
+
 #### Invalid resource ID
 
 If you get `Error: Invalid resource ID` when running `plan`, one of the reasons could be that, rather than an incorrect resource ID being provided as reported, the provider is incorrectly configured.  
